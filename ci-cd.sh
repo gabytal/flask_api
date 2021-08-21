@@ -83,7 +83,7 @@ docker tag flask-app:"$version" "$3":"$version"
 echo
 echo "Pushing image to ECR..."
 echo
-docker push "$3"/flask-app:"$version"
+docker push "$3":"$version"
 if [ $? -eq 0 ]; then
     echo
     echo "Connected to ECR Repo!"
