@@ -33,12 +33,11 @@ def index():
         return jsonify(err.messages), 400
 
     if result:
-
         json_element = {'log_type': request_data['log_type'],
                         'message': request_data['message']}
         # send the json to elastic using Elastic python module
         try:
-            response = client.index(index='api-index', doc_type='_doc', body=json_element, request_timeout=30)
+            response = client.index(index='api-index', doc_type='_doc', body=json_element, request_timeout=15)
         except Exception as e:
             return f'Error sending index to elastic search. {e}'
 
