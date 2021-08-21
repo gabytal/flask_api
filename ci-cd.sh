@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # This is a CI\CD script that: Clone, Build, Test, Save Artifac & Deploy Artifact.
-# Usage: 
+# Usage:
 # 1. git clone https://github.com/gabytal/flask_api.git
 # 2. cd flask_api/
 # 3. chmod 555 ci-cd.sh test_api_functionality.sh
@@ -21,7 +21,7 @@ else
 fi
 
 
-echo "running Application container for testing" && 
+echo "running Application container for testing" &&
 docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 if [ $? -eq 0 ]; then
     echo "Application container for testing has been created"
@@ -29,8 +29,8 @@ else
     echo "Application container for testing has not been created, please investigate"
     exit 1
  fi
-    
-  
+
+
 # wait for the API to start
 sleep 10
 
@@ -48,8 +48,17 @@ fi
 echo "CI Process has been passed."
 echo "Pushing Atrifact - flask-app:"$version" to ECR."
 
-docker login "$ecr_repo"
-docker push flask-app:"$version"
+eval $(aws ecr get-login --no-include-email --region=us-east-1)
+if [ $? -eq 0 ]; then
+    echo "Connected to ECR Repo!"
+else
+    echo "There was a problem with the connection to the ECR REPO. please investigate"
+    exit 1
+fi
+
+echo "Pushing image to ECR..."
+toc
+docker tag flask-app:"$version" "$3":flask-app:"$version"
 docker image prune -a --force
 
 # clean env
