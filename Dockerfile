@@ -1,8 +1,6 @@
 FROM python:3.9
 
-COPY ./flask_app.py /app
-
-WORKDIR /app
+COPY ./flask_app.py /
 
 RUN pip install -r requirements.txt
 
