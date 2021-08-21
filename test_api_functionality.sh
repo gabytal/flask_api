@@ -10,5 +10,5 @@ if test "$status_code" -ne 200; then
     exit 2
 else
     echo "Response status code: $status_code"
-    echo “The API is OK!"
+    echo "The API is OK!"
 fi
