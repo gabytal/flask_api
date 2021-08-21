@@ -86,7 +86,7 @@ echo
 docker push "$3":"$version"
 if [ $? -eq 0 ]; then
     echo
-    echo "Connected to ECR Repo!"
+    echo "Api Version "$version" has been pushed to ECR Repo!"
     echo
 else
     echo
@@ -94,10 +94,12 @@ else
     echo
     exit 1
 fi
-docker image prune -a --force
+
+
 
 # clean env
 echo "Cleaning Testing Enviornment."
+docker image prune -a --force
 cd .. && rm -Rf flask_api/
 docker rm -f flask-app
 
