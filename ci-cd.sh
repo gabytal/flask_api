@@ -1,3 +1,11 @@
+# This is a CI\CD script that: Clone, Build, Test, Save Artifac & Deploy Artifact.
+# Usage: 
+# 1. git clone https://github.com/gabytal/flask_api.git
+# 2. cd flask_api/
+# 3. chmod 555 ci-cd.sh test_api_functionality.sh
+# 4. sudo ./ci-cd.sh <APP_VERSION> <ELASTIC_SEARCH_ENDPOINT> <ECR_REPO> \\
+#  Example: sudo./ci-cd.sh 1.0 vpc.us-east-1.es.amazonaws.com 806.dkr.ecr.us-east-1.amazonaws.com/docker
+
 #!/usr/bin/env bash
 version=$1
 elk_host=$2
@@ -7,7 +15,8 @@ cd /home/ubuntu/flask_api/ &&
 docker build -t flask-app:$version . &&
 docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 
-chmod 555 test_api_functionality.sh
+# wait for the API to start
+sleep 10
 
 ./test_api_functionallity.sh
 if [ $? -eq 0 ]; then
