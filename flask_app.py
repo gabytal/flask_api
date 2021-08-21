@@ -7,7 +7,6 @@ import json
 
 elk_host = os.environ['elk_host']
 
-print("Running with user: %s" % username)
 app = Flask('flaskapp')
 
 
