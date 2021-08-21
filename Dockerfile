@@ -1,6 +1,6 @@
 FROM python:3.9
 
-COPY . /app
+COPY ./flask_app.py /app
 
 WORKDIR /app
 
