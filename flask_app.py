@@ -6,7 +6,7 @@ from elasticsearch import Elasticsearch
 import json
 
 elk_host = os.environ['elk_host']
-password = os.environ['MY_PASS']
+
 print("Running with user: %s" % username)
 app = Flask('flaskapp')
 
