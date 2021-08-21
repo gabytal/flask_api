@@ -14,9 +14,14 @@ ecr_repo=$3
 cd /home/ubuntu/flask_api/ &&
 docker build -t flask-app:"$version" . &&
 if [ $? -eq 0 ]; then
+    echo
     echo "A new Docker image has built - flask-app:$version"
+    echo
+
 else
+    echo
     echo "There was a problem to build Dockerfile, please investigate"
+    echo
     exit 1
 fi
 
@@ -24,9 +29,15 @@ fi
 echo "running Application container for testing" &&
 docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 if [ $? -eq 0 ]; then
+    echo
     echo "Application container for testing has been created"
+    echo
+
 else
+    echo
     echo "Application container for testing has not been created, please investigate"
+    echo
+
     exit 1
  fi
 
@@ -38,9 +49,14 @@ sleep 10
 # execute functional tests
 ./test_api_functionality.sh
 if [ $? -eq 0 ]; then
+    echo
     echo "the API is fucntioning!"
+    echo
+
 else
+    echo
     echo "There was a problem with the API, please investigate"
+    echo
     exit 1
 fi
 
@@ -50,14 +66,20 @@ echo "Pushing Atrifact - flask-app:"$version" to ECR."
 
 eval $(aws ecr get-login --no-include-email --region=us-east-1)
 if [ $? -eq 0 ]; then
+    echo
     echo "Connected to ECR Repo!"
+    echo
+
 else
+    echo
     echo "There was a problem with the connection to the ECR REPO. please investigate"
+    echo
     exit 1
 fi
 
+echo
 echo "Pushing image to ECR..."
-toc
+echo
 docker tag flask-app:"$version" "$3"/flask-app:"$version"
 docker image prune -a --force
 
