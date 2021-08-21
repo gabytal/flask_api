@@ -35,15 +35,14 @@ def index():
 
     if result:
         json_element = {'log_type': request_data['log_type'],
-                        'message': request_data['message']}
+                        'message': request_data['message']
+                       'version': request_data['version']}
         # send the json to elastic using Elastic python module
         try:
             response = client.index(index='api-index', doc_type='_doc', body=json_element, request_timeout=15)
         except Exception as e:
             return f'Error sending index to elastic search. {e}'
-
         return json_element
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
