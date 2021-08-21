@@ -28,6 +28,7 @@ if [ $? -eq 0 ]; then
 else
     echo "Application container for testing has not been created, please investigate"
     exit 1
+ fi
     
   
 # wait for the API to start
