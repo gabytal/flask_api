@@ -1,7 +1,6 @@
 # import requried modules
 import os
 from flask import Flask, request, jsonify
-from ip2geotools.databases.noncommercial import DbIpCity
 from datetime import datetime, date, time, timezone
 from elasticsearch import Elasticsearch
 import json
