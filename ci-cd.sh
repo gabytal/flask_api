@@ -3,9 +3,7 @@ version=$1
 elk_host=$2
 ecr_repo=$3
 
-cd /home/ubuntu/ &&
-git clone https://github.com/gabytal/flask_api.git &&
-cd flask_api/ &&
+cd /home/ubuntu/flask_api/ &&
 docker build -t flask-app:$version . &&
 docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 
