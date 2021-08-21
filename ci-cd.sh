@@ -12,7 +12,7 @@ elk_host=$2
 ecr_repo=$3
 
 cd /home/ubuntu/flask_api/ &&
-docker build -t flask-app:"$version" . &&
+docker build --no-cache -t flask-app:"$version" . &&
 if [ $? -eq 0 ]; then
     echo
     echo "A new Docker image has built - flask-app:$version"
