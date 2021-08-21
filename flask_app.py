@@ -12,7 +12,7 @@ class BaseSchema(Schema):
 
 
 # set ElasticSearch host
-client = Elasticsearch(hosts=[os.environ['elk_host']])
+client = Elasticsearch(hosts=[f'{os.environ['elk_host']}:80'])
 
 app = Flask('flaskapp')
 
