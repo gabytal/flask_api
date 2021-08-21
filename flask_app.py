@@ -12,18 +12,13 @@ class BaseSchema(Schema):
 
 
 # set ElasticSearch host
-es_client = Elasticsearch(hosts=[f'{os.environ['elk_host']}:80'])
-try:
-    es_client.ping()
-expect Exception as e:
-    print(f'There was a problem with the connection to ES, {e}')
-    
-    
+client = Elasticsearch(hosts=[f'{os.environ["elk_host"]}:80'])
+
 app = Flask('flaskapp')
 
 
 # set the proper GET endpoint
-@app.route('/logs', methods=["POST"])
+@ app.route('/logs', methods=["POST"])
 def index():
     # Get Request body from JSON
     request_data = request.json
@@ -38,7 +33,7 @@ def index():
         return jsonify(err.messages), 400
 
     if result:
-        
+
         json_element = {'log_type': request_data['log_type'],
                         'message': request_data['message']}
         # send the json to elastic using Elastic python module
