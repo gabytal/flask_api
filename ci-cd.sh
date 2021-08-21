@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # This is a CI\CD script that: Clone, Build, Test, Save Artifac & Deploy Artifact.
 # Usage: 
 # 1. git clone https://github.com/gabytal/flask_api.git
@@ -6,13 +7,12 @@
 # 4. sudo ./ci-cd.sh <APP_VERSION> <ELASTIC_SEARCH_ENDPOINT> <ECR_REPO> \\
 #  Example: sudo./ci-cd.sh 1.0 vpc.us-east-1.es.amazonaws.com 806.dkr.ecr.us-east-1.amazonaws.com/docker
 
-#!/usr/bin/env bash
 version=$1
 elk_host=$2
 ecr_repo=$3
 
 cd /home/ubuntu/flask_api/ &&
-docker build -t flask-app:$version . &&
+docker build -t flask-app:"$version" . &&
 if [ $? -eq 0 ]; then
     echo "A new Docker image has built - flask-app:$version"
 else
@@ -56,5 +56,7 @@ docker image prune -a --force
 echo "Cleaning Testing Enviornment."
 cd .. && rm -Rf flask_api/
 docker rm -f flask-app
+
+
 
 
