@@ -9,12 +9,10 @@ elk_host = os.environ['elk_host']
 
 app = Flask('flaskapp')
 
-
 # set the proper GET endpoint
-@app.route('/tracking', methods=["POST"])
-
-# convert data to JSON format
-def index(product=""):
+@app.route('/logs', methods=["POST"])
+def index():
+    product = request.args.get('product')
     json_element = {'product': product}
     
     # set ElasticSearch host
