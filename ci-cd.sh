@@ -78,7 +78,7 @@ else
 fi
 
 
-docker tag flask-app:"$version" "$3"/flask-app:"$version"
+docker tag flask-app:"$version" "$3":"$version"
 
 echo
 echo "Pushing image to ECR..."
