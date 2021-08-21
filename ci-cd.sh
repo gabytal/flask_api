@@ -67,7 +67,7 @@ echo "Pushing Atrifact - flask-app:"$version" to ECR."
 eval $(aws ecr get-login --no-include-email --region=us-east-1)
 if [ $? -eq 0 ]; then
     echo
-    echo "Connected to ECR Repo!"
+    echo "Successfully login to ECR Repo!"
     echo
 
 else
@@ -77,10 +77,23 @@ else
     exit 1
 fi
 
+
+docker tag flask-app:"$version" "$3"/flask-app:"$version"
+
 echo
 echo "Pushing image to ECR..."
 echo
-docker tag flask-app:"$version" "$3"/flask-app:"$version"
+docker push "$3"/flask-app:"$version"
+if [ $? -eq 0 ]; then
+    echo
+    echo "Connected to ECR Repo!"
+    echo
+else
+    echo
+    echo "There was a problem with the connection to the ECR REPO. please investigate"
+    echo
+    exit 1
+fi
 docker image prune -a --force
 
 # clean env
