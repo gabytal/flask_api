@@ -13,14 +13,31 @@ ecr_repo=$3
 
 cd /home/ubuntu/flask_api/ &&
 docker build -t flask-app:$version . &&
-docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
+if [ $? -eq 0 ]; then
+    echo "A new Docker image has built - flask-app:$version"
+else
+    echo "There was a problem to build Dockerfile, please investigate"
+    exit 1
+fi
 
+
+echo "running Application container for testing" && 
+docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
+if [ $? -eq 0 ]; then
+    echo "Application container for testing has been created"
+else
+    echo "Application container for testing has not been created, please investigate"
+    exit 1
+    
+  
 # wait for the API to start
 sleep 10
 
-./test_api_functionallity.sh
+
+# execute functional tests
+./test_api_functionality.sh
 if [ $? -eq 0 ]; then
-    echo "the API is is fucntioning!"
+    echo "the API is fucntioning!"
 else
     echo "There was a problem with the API, please investigate"
     exit 1
