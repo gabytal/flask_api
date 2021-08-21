@@ -58,7 +58,7 @@ fi
 
 echo "Pushing image to ECR..."
 toc
-docker tag flask-app:"$version" "$3":flask-app:"$version"
+docker tag flask-app:"$version" "$3"/flask-app:"$version"
 docker image prune -a --force
 
 # clean env
