@@ -5,7 +5,7 @@
 # 2. cd flask_api/
 # 3. chmod 555 ci-cd.sh test_api_functionality.sh
 # 4. sudo ./ci-cd.sh <APP_VERSION> <ELASTIC_SEARCH_ENDPOINT> <ECR_REPO> \\
-#  Example: sudo./ci-cd.sh 1.0 vpc.us-east-1.es.amazonaws.com 806.dkr.ecr.us-east-1.amazonaws.com/docker
+#  Example: sudo./ci-cd.sh 1.0 vpc.us-east-1.es.amazonaws.com 806.dkr.ecr.us-east-1.amazonaws.com/flask_app
 
 version=$1
 elk_host=$2
