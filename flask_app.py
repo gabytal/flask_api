@@ -4,7 +4,19 @@ import os
 from flask import Flask, request, jsonify
 from elasticsearch import Elasticsearch
 from marshmallow import Schema, fields, ValidationError
+import logging
 
+# configure logging
+logs_format = '[%(asctime)s] %(levelname)s - %(message)s'
+logger = logging.getLogger()
+
+# this is needed in order to see the logs through K8s logs
+# '/proc/1/fd/1' file is functioning as the Pod's STDOUT.
+handler = logging.FileHandler('/proc/1/fd/1', mode='w')
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter(logs_format)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 class BaseSchema(Schema):
     log_type = fields.String(required=True)
@@ -13,6 +25,7 @@ class BaseSchema(Schema):
 
 
 # set ElasticSearch host
+logger.debug(f"Setting ES host: {os.environ["elk_host"]}")
 client = Elasticsearch(hosts=[f'{os.environ["elk_host"]}:80'])
 
 app = Flask('flaskapp')
@@ -28,19 +41,25 @@ def index():
     result = False
     try:
         # Validate request body against schema data types
+        logger.debug("Validating request body")
         result = schema.load(request_data)
     except ValidationError as err:
         # Return a nice message if validation fails
+        logger.error("Request body validations has faild!")
         return jsonify(err.messages), 400
-
+    
     if result:
+        logger.info("Request body validations has passed!")
+        logger.debug("Praparing data for ES")
         json_element = {'log_type': request_data['log_type'],
                         'message': request_data['message']
                        'version': request_data['version']}
         # send the json to elastic using Elastic python module
         try:
+            logger.debug(f"Sending data for ES: {json_element}")
             response = client.index(index='api-index', doc_type='_doc', body=json_element, request_timeout=15)
         except Exception as e:
+            logger.error("Could not send data to ES!")
             return f'Error sending index to elastic search. {e}'
         return json_element
 
