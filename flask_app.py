@@ -12,8 +12,13 @@ class BaseSchema(Schema):
 
 
 # set ElasticSearch host
-client = Elasticsearch(hosts=[f'{os.environ['elk_host']}:80'])
-
+es_client = Elasticsearch(hosts=[f'{os.environ['elk_host']}:80'])
+try:
+    es_client.ping()
+expect Exception as e:
+    print(f'There was a problem with the connection to ES, {e}')
+    
+    
 app = Flask('flaskapp')
 
 
