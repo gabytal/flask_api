@@ -1,10 +1,32 @@
 #!/usr/bin/env bash
+version=$1
+elk_host=$2
+ecr_repo=$3
+
 cd /home/ubuntu/ &&
 git clone https://github.com/gabytal/flask_api.git &&
 cd flask_api/ &&
-docker build -t flask-app:$1 . &&
-docker run -d --name flask-app -p 5000:5000 --env elk_host="$2" flask-app:"$1"
+docker build -t flask-app:$version . &&
+docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
+
+./test_api_functionallity.sh
+if [ $? -eq 0 ]; then
+    echo "the API is is fucntioning!"
+else
+    echo "There was a problem with the API, please investigate"
+    exit 1
+fi
+
+# clean env
 cd .. && rm -Rf flask_api/
+docker rm -f flask-app
+echo "CI Process has been passed."
+
+echo "Pushing Atrifact - flask-app:"$version" to ECR."
+
+docker login "$ecr_repo"
+docker push flask-app:"$version"
 docker image prune -a --force
 
-echo "OK"
+
+
