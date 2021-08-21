@@ -61,8 +61,10 @@ else
 fi
 
 
-echo "CI Process has been passed."
-echo "Pushing Atrifact - flask-app:"$version" to ECR."
+echo "CI Process has been passed for "$version""
+echo
+echo
+echo "Pushing Atrifact: flask-app:"$version" to ECR."
 
 eval $(aws ecr get-login --no-include-email --region=us-east-1)
 if [ $? -eq 0 ]; then
@@ -78,7 +80,7 @@ else
 fi
 
 
-docker tag flask-app:"$version" "$3":"$version"
+docker tag flask-app:"$version" "$ecr_repo":"$version"
 
 echo
 echo "Pushing image to ECR..."
