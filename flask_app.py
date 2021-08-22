@@ -30,6 +30,9 @@ class BaseSchema(Schema):
 logger.debug(f"Setting ES host: {es_host}")
 client = Elasticsearch(hosts=[f"{es_host}:80"])
 
+if not client.ping():
+    logger.error("Could not connect to Elastic Search!, please investigate")
+
 app = Flask('flaskapp')
 
 
