@@ -9,10 +9,11 @@
 
 ## API Features:
   * supports only POST requests at /logs endpoint 
-    * supported data type: application/json
+    * supported data type: 
+           * application/json
     supported keys:
       * "log_type": STR
-      + "message": STR
+      * "message": STR
       * "version": INT
     
       
