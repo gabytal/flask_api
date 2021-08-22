@@ -25,8 +25,10 @@ else
     exit 1
 fi
 
-
+echo
 echo "running Application container for testing" &&
+echo
+
 docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 if [ $? -eq 0 ]; then
     echo
@@ -49,6 +51,7 @@ sleep 10
 # execute functional tests
 ./test_api_functionality.sh
 if [ $? -eq 0 ]; then
+    echo
     echo
     echo "the API is fucntioning!"
     echo
