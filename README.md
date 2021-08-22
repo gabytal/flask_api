@@ -8,7 +8,7 @@
         
 
 ## API Features:
-  * supports POST requests
+  * supports only POST requests at /logs endpoint 
     * supported data type: application/json
     supported keys:
       * "log_type": STR
