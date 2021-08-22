@@ -63,7 +63,7 @@ def index():
                         'version': request_data['version']}
         # send the json to elastic using Elastic python module
         try:
-            logger.debug(f"Sending data for ES: {json_element}")
+            logger.debug(f"Sending data to ES: {json_element}")
             response = client.index(index='api-index', doc_type='_doc', body=json_element, request_timeout=15)
         except Exception as e:
             logger.error("Could not send data to ES!")
