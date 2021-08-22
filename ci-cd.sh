@@ -29,7 +29,7 @@ echo
 echo "running Application container for testing" &&
 echo
 
-docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
+docker run -d --name flask-app-test -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 if [ $? -eq 0 ]; then
     echo
     echo "Application container for testing has been created"
@@ -106,7 +106,7 @@ fi
 echo "Cleaning Testing Enviornment."
 docker image prune -a --force
 cd .. && rm -Rf flask_api/
-docker rm -f flask-app
+docker rm -f flask-app-test
 
 
 
@@ -148,5 +148,11 @@ else
 
     exit 1
  fi
+
+echo "The API Server is ON"
+# USAGE:
+# curl -H "Content-Type: application/json" -X POST  -d '{"log_type":"asdgyz", "message": "test5555", "version": 11}' http://localhost:5000/logs
+# {"log_type":"asdgyz","message":"test5555","version":11}"
+
 
 
