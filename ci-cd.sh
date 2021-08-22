@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This is a CI\CD script that: Clone, Build, Test, Save Artifact version at ECR Rrepo & Deploy the Artifact to the production server2.
+# This is a CI\CD script that: Clone, Build, Test, Save Artifact version at ECR Rrepo & Deploy the Artifact to the production.
 # Usage:
 # 1. git clone https://github.com/gabytal/flask_api.git
 # 2. cd flask_api/
