@@ -85,7 +85,7 @@ docker tag flask-app:"$version" "$ecr_repo":"$version"
 echo
 echo "Pushing image to ECR..."
 echo
-docker push "$3":"$version"
+docker push "$ecr_repo":"$version"
 if [ $? -eq 0 ]; then
     echo
     echo "Api Version "$version" has been pushed to ECR Repo!"
@@ -106,20 +106,43 @@ cd .. && rm -Rf flask_api/
 docker rm -f flask-app
 
 
-# deploying the tested version
+
+# Deploying the tested version
 echo
-echo "deploying version "$version" to production env" &&
+echo "Deploying version "$version" to production env"
 echo
-# Production Env demostrated locally
-docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
+
+
+# Production Env demonstrated locally
+echo
+echo "Remove existing container..."
+echo
+docker rm -f flask-app
 if [ $? -eq 0 ]; then
     echo
-    echo "Application container in Prod Env been created with version "$version" "
+    echo "Prod container been deleted"
     echo
 else
     echo
-    echo "Application container in Prod Env not been created, please investigate"
+    echo "Prod container could not be deleted, please investigate"
     echo
+    exit 1
+ fi
+
+echo
+echo "creating new container...."
+echo
+docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version"
+if [ $? -eq 0 ]; then
+    echo
+    echo "Application container been created with version "$version" "
+    echo
+
+else
+    echo
+    echo "Application container for testing has not been created, please investigate"
+    echo
+
     exit 1
  fi
 
