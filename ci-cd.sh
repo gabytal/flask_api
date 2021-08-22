@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This is a CI\CD script that: Clone, Build, Test, Save Artifac & Deploy Artifact.
+# This is a CI\CD script that: Clone, Build, Test, Save Artifact version at ECR Rrepo & Deploy the Artifact to the production server2.
 # Usage:
 # 1. git clone https://github.com/gabytal/flask_api.git
 # 2. cd flask_api/
@@ -99,12 +99,28 @@ fi
 
 
 
-# clean env
+# clean ci env
 echo "Cleaning Testing Enviornment."
 docker image prune -a --force
 cd .. && rm -Rf flask_api/
 docker rm -f flask-app
 
 
+# deploying the tested version
+echo
+echo "deploying version "$version" to production env" &&
+echo
+# Production Env demostrated locally
+docker run -d --name flask-app -p 5000:5000 --env elk_host="$elk_host" flask-app:"$version" &&
+if [ $? -eq 0 ]; then
+    echo
+    echo "Application container in Prod Env been created with version "$version" "
+    echo
+else
+    echo
+    echo "Application container in Prod Env not been created, please investigate"
+    echo
+    exit 1
+ fi
 
 
