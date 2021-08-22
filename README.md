@@ -8,13 +8,14 @@
         
 
 ## API Features:
-  * supports only POST requests at /logs endpoint 
-    * supported data type: 
-           * application/json
-    supported keys:
-      * "log_type": STR
-      * "message": STR
-      * "version": INT
+    *  supports only POST requests at /logs endpoint 
+    * supported data type:           
+           *  application/json
+
+     * supported keys:
+           *  "log_type": STR
+           *  "message": STR
+           *  "version": INT
     
       
   * Advance API Application Logging
