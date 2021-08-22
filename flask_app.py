@@ -36,7 +36,7 @@ if not client.ping():
 app = Flask('flaskapp')
 
 
-# set the proper GET endpoint
+# set the proper POST endpoint
 @app.route('/logs', methods=["POST"])
 def index():
     # Get Request body from JSON
