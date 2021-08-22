@@ -32,6 +32,7 @@ client = Elasticsearch(hosts=[f"{es_host}:80"])
 
 if not client.ping():
     logger.error("Could not connect to Elastic Search!, please investigate")
+    os.sys.exit(1)
 
 app = Flask('flaskapp')
 
