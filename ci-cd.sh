@@ -60,6 +60,7 @@ if [ $? -eq 0 ]; then
 else
     echo
     echo "There was a problem with the API, please investigate"
+    docker rm -f flask-app
     echo
     exit 1
 fi
@@ -145,8 +146,8 @@ if [ $? -eq 0 ]; then
 else
     echo
     echo "Application container for testing has not been created, please investigate"
+    docker rm -f flask-app
     echo
-
     exit 1
  fi
 
