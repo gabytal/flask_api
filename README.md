@@ -31,7 +31,7 @@
  * Push Artifact version at ECR Repo  
  * Deploy the Artifact to the production server
 
-###Usage
+### Usage
 #### This process needs to be executed each time a new version of the API is ready.
 in a better world, this ci-cd script will be replaced with a Jenkins pipeline.
 
