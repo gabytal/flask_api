@@ -29,7 +29,7 @@ echo
 echo "running Application container for testing" &&
 echo
 
-docker run -d --name flask-app-test -p 5000:4500 --env elk_host="$elk_host" flask-app:"$version" &&
+docker run -d --name flask-app-test -p 4500:5000 --env elk_host="$elk_host" flask-app:"$version" &&
 if [ $? -eq 0 ]; then
     echo
     echo "Application container for testing has been created"
