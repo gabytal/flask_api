@@ -70,7 +70,7 @@ def index():
             return f'Error sending index to elastic search. {e}'
         if response:
             logger.info("Data successfully sent to ES!")
-        return json_element
+    return json_element
 
 
 if __name__ == '__main__':
