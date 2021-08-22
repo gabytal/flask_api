@@ -12,7 +12,7 @@ logger = logging.getLogger()
 es_host = os.environ['elk_host']
 
 # this is needed in order to see the logs through docker logs
-# '/proc/1/fd/1' file is functioning as the Pod's STDOUT.
+# '/proc/1/fd/1' file is functioning as the container STDOUT.
 handler = logging.FileHandler('/proc/1/fd/1', mode='w')
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter(logs_format)
