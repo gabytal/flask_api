@@ -1,7 +1,7 @@
-## basic API with Python & Flask
+## a Basic API server
 #### this is a basic API server application.
 #### created with Python & Flask.
-#### hosted on Docker container
+#### hosted on a Docker container.
 #
 
 ##  Application Layer
