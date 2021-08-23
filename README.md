@@ -1,3 +1,9 @@
+## basic API with Python & Flask
+#### this is a basic API server application.
+#### created with Python & Flask.
+#### hosted on Docker container
+#
+
 ##  Application Layer
 * Docker container
     * Python 3.9 Docker image
@@ -8,7 +14,9 @@
         
 
 ## API Features:
-    *  supports only POST requests at /logs endpoint 
+    * Running on port 5000
+    * supported API endpoint: /logs
+    * supported HTTP METHOD: POST
     * supported data type:           
            *  application/json
 
